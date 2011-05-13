@@ -21,11 +21,11 @@ extend String {
 
 HttpParser : class {
     headers := HashMap<String,String> new()
-    getParams := HashMap<String,String> new()
     raw : String
     method : String
     path : String
     protocol : String
+    queryString : String
     
     init : func(=raw)
     
@@ -40,18 +40,8 @@ HttpParser : class {
                 protocol = lines[0] substring(indexes[1]+1)
                 
                 if(path findAll("?") getSize() > 0) {
-                    whole := path
-                    path = whole substring(0,whole findAll("?")[0])
-                    whole = whole substring(whole findAll("?")[0] + 1)
-                    
-                    parts := whole split("&")
-                    for(part in parts) {
-                        if(part findAll("=") getSize() > 0) {
-                            getParams[part substring(0,part findAll("=")[0])] = part substring(part findAll("=")[0]+1)
-                        } else {
-                            getParams[part] = ""
-                        }
-                    }
+                    queryString = path substring(path findAll("?")[0] + 1)
+                    path = path substring(0,path findAll("?")[0])
                 }
             }
             lines removeAt(0)
