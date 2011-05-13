@@ -12,19 +12,16 @@ ConfigLoader : class
     
     init : func(args : ArrayList<String>)
     {
-        for(arg in args)
-        {
+        for(arg in args) {
             // Process command line arguments
-            if(arg == "-v" || arg == "--verbose")
-            {
+            if(arg == "-v" || arg == "--verbose") {
                 verbose? = true
             }
         }
     
         // Process config file
         configFile := File new("slights.cfg")
-        if(configFile file?())
-        {
+        if(configFile file?()) {
             // Process ... 
             data := configFile read() // read data
             lines := data split('\n') // split into lines
