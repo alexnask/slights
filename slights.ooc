@@ -2,8 +2,7 @@ import HttpServer
 import ConfigLoader
 import structs/ArrayList
 
-main : func (args : ArrayList<String> ) -> Int
-{
+main : func (args : ArrayList<String> ) -> Int {
     config := ConfigLoader new(args)
     server := HttpServer new(config)
     

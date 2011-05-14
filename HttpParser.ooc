@@ -40,7 +40,7 @@ HttpParser : class {
                 protocol = lines[0] substring(indexes[1]+1)
                 
                 if(path findAll("?") getSize() > 0) {
-                    queryString = path substring(path findAll("?")[0] + 1)
+                    queryString = path substring(path findAll("?")[0] + 1) // It is the clients responsibility to urlencode yay :D !
                     path = path substring(0,path findAll("?")[0])
                 }
             }

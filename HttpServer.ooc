@@ -1,11 +1,11 @@
-import [ConfigLoader,HttpParser]
+import [ConfigLoader,HttpResponder]
 import threading/Thread
 import net/[berkeley,ServerSocket,StreamSocket]
 
 extend StreamSocketReader {
     readUntil : func(str : String) -> String {
         data := "" as String
-        while(! data endsWith?(str)) {
+        while(!data endsWith?(str)) {
             data += read()
         }
         data
@@ -43,7 +43,9 @@ HttpServer : class {
                     ("Handling client" + client sock remote toString()) println()
                 }
                 
-                parser := HttpParser new(client in readUntil("\r\n\r\n")) .parse() // An HTTP request ends with \r\n\r\n
+                responder := HttpResponder new(client in readUntil("\r\n\r\n"),config,client) .respond() // Setup a responder, give it the info we have gathered so far and tell it to respond to client
+                
+                // Close connection
                 client close() })
             thread start()
         }
